@@ -5,7 +5,12 @@ import HomeClient from './home-client'
 
 export default function Page() {
   return (
-    <Suspense fallback={<p className="p-10">Loading…</p>}>
+    <Suspense fallback={
+  <div className="p-10">
+    <p>Please log in.</p>
+    <a href="/login" className="underline">Go to login</a>
+  </div>
+}>
       <HomeClient />
     </Suspense>
   )
