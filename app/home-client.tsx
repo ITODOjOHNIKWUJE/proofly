@@ -155,9 +155,14 @@ Create and manage your proof pages.
       <ul className="mt-6 space-y-2">
         {pages.map((page) => (
           <li key={page.id} className="border p-3 rounded">
-            <strong>{page.title}</strong>
-            <div className="text-sm text-gray-500">/{page.slug}</div>
-          </li>
+           <a
+           href={`/p/${page.slug}`}
+           className="font-semibold text-blue-600 underline"
+           >
+           {page.title}
+           </a>
+           <div className="text-sm text-gray-500">/p/{page.slug}</div>
+         </li>
         ))}
       </ul>
     </main>
