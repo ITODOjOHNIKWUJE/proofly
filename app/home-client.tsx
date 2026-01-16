@@ -110,8 +110,19 @@ export default function HomeClient() {
   }
 
   if (loading) return <p className="p-10">Loading dashboard…</p>
-  if (!session) return <p className="p-10">Please log in.</p>
-
+  if (!session) {
+  return (
+    <div className="p-10">
+      <p className="mb-4">Please log in.</p>
+      <a
+        href="/login"
+        className="inline-block bg-black text-white px-4 py-2"
+      >
+        Go to login
+      </a>
+    </div>
+  )
+}
   return (
     <main className="p-10 max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-4">Your Proofly Pages</h1>
