@@ -77,28 +77,9 @@ export default function HomeClient() {
   }
 
   const createPage = async () => {
-  if (!title || !session) return
+    if (!title || !session) return
 
-  setStatus('Creating page...')
-
-  const slug = title.toLowerCase().replace(/\s+/g, '-')
-
-  const { error } = await supabase.from('pages').insert({
-    title,
-    slug,
-    user_id: session.user.id,
-  })
-
-  if (error) {
-    setStatus(error.message)
-    return
-  }
-
-  setTitle('')
-  setStatus(null)
-
-  window.location.href = `/p/${slug}`
-}
+    setStatus('Creating page...')
 
     const slug = title.toLowerCase().replace(/\s+/g, '-')
 
@@ -108,30 +89,39 @@ export default function HomeClient() {
       user_id: session.user.id,
     })
 
-    if (!error) {
-      setTitle('')
-      fetchPages(session.user.id)
+    if (error) {
+      setStatus(error.message)
+      return
     }
+
+    setTitle('')
+    setStatus(null)
+
+    window.location.href = `/p/${slug}`
   }
 
   if (loading) return <p className="p-10">Loading dashboard…</p>
+
   if (!session) {
-  if (typeof window !== 'undefined') {
-    window.location.href = '/login'
+    if (typeof window !== 'undefined') {
+      window.location.href = '/login'
+    }
+    return null
   }
-  return null
-}
+
   return (
     <main className="p-10 max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
-<p className="text-gray-600 mb-4">
-Create and manage your proof pages.
-</p>
+      <p className="text-gray-600 mb-4">
+        Create and manage your proof pages.
+      </p>
 
       {success === 'true' && (
         <div className="mb-4 p-3 bg-green-100 rounded">
           Payment successful
-          {upgradeStatus && <div className="text-sm">{upgradeStatus}</div>}
+          {upgradeStatus && (
+            <div className="text-sm">{upgradeStatus}</div>
+          )}
         </div>
       )}
 
@@ -143,29 +133,29 @@ Create and manage your proof pages.
       />
 
       <button
-  onClick={createPage}
-  disabled={!title}
-  className="bg-black text-white px-4 py-2 w-full disabled:opacity-50 disabled:cursor-not-allowed"
->
-  Create Page
-</button>
+        onClick={createPage}
+        disabled={!title}
+        className="bg-black text-white px-4 py-2 w-full disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Create Page
+      </button>
 
       {status && <p className="text-sm mt-2">{status}</p>}
 
       <ul className="mt-6 space-y-2">
         {pages.map((page) => (
           <li
-  key={page.id}
-  onClick={() => window.location.href = `/p/${page.slug}`}
-  className="border p-4 rounded cursor-pointer hover:bg-gray-50"
->
-  <div className="font-semibold text-blue-600">
-    {page.title}
-  </div>
-  <div className="text-sm text-gray-500">
-    /p/{page.slug}
-  </div>
-</li>
+            key={page.id}
+            onClick={() => (window.location.href = `/p/${page.slug}`)}
+            className="border p-4 rounded cursor-pointer hover:bg-gray-50"
+          >
+            <div className="font-semibold text-blue-600">
+              {page.title}
+            </div>
+            <div className="text-sm text-gray-500">
+              /p/{page.slug}
+            </div>
+          </li>
         ))}
       </ul>
     </main>
