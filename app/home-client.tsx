@@ -77,23 +77,28 @@ export default function HomeClient() {
   }
 
   const createPage = async () => {
-    if (!title || !session) return
+  if (!title || !session) return
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('is_pro')
-      .eq('id', session.user.id)
-      .single()
+  setStatus('Creating page...')
 
-    const { count } = await supabase
-      .from('pages')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', session.user.id)
+  const slug = title.toLowerCase().replace(/\s+/g, '-')
 
-    if (!profile?.is_pro && count && count >= 1) {
-      setStatus('Free plan allows only 1 page')
-      return
-    }
+  const { error } = await supabase.from('pages').insert({
+    title,
+    slug,
+    user_id: session.user.id,
+  })
+
+  if (error) {
+    setStatus(error.message)
+    return
+  }
+
+  setTitle('')
+  setStatus(null)
+
+  window.location.href = `/p/${slug}`
+}
 
     const slug = title.toLowerCase().replace(/\s+/g, '-')
 
