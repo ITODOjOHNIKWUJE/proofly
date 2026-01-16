@@ -154,16 +154,18 @@ Create and manage your proof pages.
 
       <ul className="mt-6 space-y-2">
         {pages.map((page) => (
-          <li key={page.id} className="border p-3 rounded">
-           <a
-  href={`/p/${page.slug}`}
+          <li
+  key={page.id}
   onClick={() => window.location.href = `/p/${page.slug}`}
-  className="font-semibold text-blue-600 underline cursor-pointer"
+  className="border p-4 rounded cursor-pointer hover:bg-gray-50"
 >
-           {page.title}
-           </a>
-           <div className="text-sm text-gray-500">/p/{page.slug}</div>
-         </li>
+  <div className="font-semibold text-blue-600">
+    {page.title}
+  </div>
+  <div className="text-sm text-gray-500">
+    /p/{page.slug}
+  </div>
+</li>
         ))}
       </ul>
     </main>
