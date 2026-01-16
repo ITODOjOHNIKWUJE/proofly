@@ -118,7 +118,10 @@ export default function HomeClient() {
 }
   return (
     <main className="p-10 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Your Proofly Pages</h1>
+      <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
+<p className="text-gray-600 mb-4">
+Create and manage your proof pages.
+</p>
 
       {success === 'true' && (
         <div className="mb-4 p-3 bg-green-100 rounded">
@@ -135,11 +138,12 @@ export default function HomeClient() {
       />
 
       <button
-        onClick={createPage}
-        className="bg-black text-white px-4 py-2 w-full"
-      >
-        Create Page
-      </button>
+  onClick={createPage}
+  disabled={!title}
+  className="bg-black text-white px-4 py-2 w-full disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  Create Page
+</button>
 
       {status && <p className="text-sm mt-2">{status}</p>}
 
