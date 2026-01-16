@@ -50,7 +50,29 @@ export default function PublicPage() {
       <h1 className="text-2xl font-bold mb-6">{page.title}</h1>
 
       {/* Approved testimonials */}
-      {testimonials.length > 0 && (
+      <section className="mb-10 space-y-4">
+  <h2 className="text-xl font-semibold">Testimonials</h2>
+
+  {testimonials.length === 0 && (
+    <p className="text-gray-500">
+      No testimonials yet. Share this link with your clients to collect one.
+    </p>
+  )}
+
+  {testimonials.map((t) => (
+    <div key={t.id} className="border p-4 rounded">
+      <p className="font-semibold">
+        {t.author_name}{' '}
+        {t.author_role && (
+          <span className="text-gray-500 text-sm">
+            — {t.author_role}
+          </span>
+        )}
+      </p>
+      <p className="mt-2">{t.content}</p>
+    </div>
+  ))}
+</section>
         <section className="mb-10 space-y-4">
           <h2 className="text-xl font-semibold">What people say</h2>
 
