@@ -111,17 +111,10 @@ export default function HomeClient() {
 
   if (loading) return <p className="p-10">Loading dashboard…</p>
   if (!session) {
-  return (
-    <div className="p-10">
-      <p className="mb-4">Please log in.</p>
-      <a
-        href="/login"
-        className="inline-block bg-black text-white px-4 py-2"
-      >
-        Go to login
-      </a>
-    </div>
-  )
+  if (typeof window !== 'undefined') {
+    window.location.href = '/login'
+  }
+  return null
 }
   return (
     <main className="p-10 max-w-lg mx-auto">
